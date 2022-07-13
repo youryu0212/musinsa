@@ -1,0 +1,25 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "html"],
+  "extends": ["naver", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", ["parent", "sibling"], "index"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "@typescript-eslint/no-var-requires": 0,
+    "object-curly-spacing": [2, "always"],
+    "consistent-return": "off",
+    "max-len": ["error", { "code": 120 }],
+    "arrow-parens": "as-needed",
+    "react/react-in-jsx-scope": 0
+  }
+}
