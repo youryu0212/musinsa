@@ -11,9 +11,9 @@ main
     |
     |--> dev
     |      |
-    |      |--> FE-dev
-    |      |      |
-    |      |      |--> feature...
+    |      |--> feature...
+    |      |
+    |      |
     |--> deploy
 ```
 
