@@ -1,5 +1,8 @@
+import createHeader from 'src/header';
 import './styles/styles.scss';
+import { qs } from './utils/dom';
 
-const $root = document.querySelector('#root');
-
-// $root.innerHTML = '<div>무신사에 오신것을 환영합니다.</div>';
+// const $root = document.querySelector('#root');
+const $app = qs('.app');
+const header = createHeader();
+$app.insertAdjacentElement('afterbegin', header);
