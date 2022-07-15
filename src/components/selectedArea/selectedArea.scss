@@ -1,0 +1,22 @@
+.selected-area {
+  @include flexbox('between');
+}
+
+.selected-filter-area {
+  @include flexbox('start');
+}
+
+.selected-filter {
+  @include flexbox();
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin: 12px 0px 12px 5px;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: #0078ff;
+  color: #fff;
+
+  .close-btn {
+    margin-left: 7px;
+  }
+}
