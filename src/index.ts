@@ -1,8 +1,7 @@
-import createHeader from 'src/header';
+import createApp from './app';
 import './styles/styles.scss';
-import { qs } from './utils/dom';
+import { appendChild } from './utils/dom';
 
-// const $root = document.querySelector('#root');
-const $app = qs('.app');
-const header = createHeader();
-$app.insertAdjacentElement('afterbegin', header);
+const $root = document.querySelector('#root');
+
+appendChild($root, createApp());

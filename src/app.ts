@@ -1,24 +1,26 @@
 import { render } from 'src/utils/dom';
-import createHeader from './header';
+import createHeader from 'src/layout/header';
+import createMain from 'src/layout/main';
 
 const tag = '[app]';
-
-const Header = createHeader();
-
-const childComponents = [Header];
 
 const handleClick = () => {
   console.log(tag);
 };
 
-const appProps = {
-  tag: 'div',
-  attributes: { class: 'app' },
-  eventName: 'click',
-  handler: handleClick,
-  childComponents,
-};
+const createApp = () => {
+  const Header = createHeader();
+  const Main = createMain();
 
-const createApp = () => render(appProps);
+  const childComponents = [Header, Main];
+  const appProps = {
+    tag: 'div',
+    attributes: { class: 'app' },
+    eventName: 'click',
+    handler: handleClick,
+    childComponents,
+  };
+  return render(appProps);
+};
 
 export default createApp;
