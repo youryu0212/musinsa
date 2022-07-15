@@ -1,0 +1,9 @@
+.no-search-result {
+  @include flexbox();
+  height: 100%;
+}
+
+.search-result {
+  @include flexbox('start', 'stretch');
+  flex-wrap: wrap;
+}
