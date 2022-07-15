@@ -1,0 +1,19 @@
+.search-bar {
+  @include flexbox('start');
+  background-color: #f9f9f9;
+  position: relative;
+  input {
+    width: 100%;
+    margin: 20px 15px;
+    padding: 10px;
+    padding-left: 30px;
+  }
+  input:focus {
+    outline: none;
+  }
+  svg {
+    position: absolute;
+    left: 20px;
+    cursor: pointer;
+  }
+}
