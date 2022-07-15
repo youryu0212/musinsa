@@ -53,7 +53,11 @@ export const emit = ($target: HtmlElementType, eventName: string, detail) => {
 };
 
 export const appendChildBeforeEnd = ($target: Element | HTMLElement, template: string | HTMLElement) => {
-  typeof template === 'string' ? $target.insertAdjacentHTML('beforeend', template) : $target.appendChild(template);
+  try {
+    typeof template === 'string' ? $target.insertAdjacentHTML('beforeend', template) : $target.appendChild(template);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const appendChild = ($target: Element | HTMLElement, components) => {
