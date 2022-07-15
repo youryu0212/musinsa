@@ -1,72 +1,12 @@
 @import './reset';
 @import './mixin';
 
-html {
-  height: 100%;
-}
-body {
-  height: 100%;
-}
+@import './global';
 
-#root {
-  background-color: #f5f5f5;
-  @include flexbox();
-  height: 100%;
-}
-.app {
-  @include column-flexbox('start', 'stretch');
-  flex-direction: column;
-  background-color: #fff;
-  width: 375px;
-  height: 812px;
-}
+@import 'src/components/mainLogo/mainLogo';
+@import 'src/components/filterArea/filterArea';
+@import 'src/components/selectedArea/selectedArea';
 
-.logo {
-  @include flexbox();
-  margin: 17px 0;
-}
-
-.filter-area {
-  @include flexbox('start');
-  margin: 0 0 10px 10px;
-}
-
-.filter-btn {
-  @include flexbox();
-  padding: 7px 15px;
-  border: 1px solid #eeeeee;
-  border-radius: 18px;
-  margin-right: 5px;
-  .small-search-btn {
-    margin-left: 10px;
-    @include flexbox();
-  }
-}
-
-.active-filter {
-  background-color: #0078ff;
-  color: #fff;
-}
-
-.active-filter-area {
-  @include flexbox('between');
-}
-
-.active-filter-area__keyword {
-  @include flexbox();
-  padding: 4px 10px;
-  border-radius: 4px;
-  margin: 12px 10px;
-
-  .close-btn {
-    margin-left: 7px;
-  }
-}
-
-main {
-  flex-grow: 1;
-  border: 0.3px solid red;
-}
 .search-bar {
   @include flexbox('start');
   background-color: #f9f9f9;
