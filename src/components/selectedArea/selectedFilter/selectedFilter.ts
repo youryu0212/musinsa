@@ -1,9 +1,8 @@
 import { CLOSE_BUTTON } from 'src/assets/svg';
 import { render } from 'src/utils/dom';
 
-const closedButton = `<div class="close-btn">${CLOSE_BUTTON}</div>`;
-
 const createSelectedFilter = (word: string, isSearchFilter: boolean | string = '') => {
+  const closedButton = `<div class="close-btn">${CLOSE_BUTTON}</div>`;
   const className = 'selected-filter' + isSearchFilter && 'isSearchFilter';
   const wordComponent = `<div class="word">${word}</div>`;
   const childComponents = [wordComponent, closedButton];
