@@ -1,0 +1,22 @@
+@function get-flex-value($key) {
+  $flex-map: (
+    start: flex-start,
+    end: flex-end,
+    between: space-between,
+    around: space-around,
+    stretch: stretch,
+    center: center,
+  );
+  @return map-get($flex-map, $key);
+}
+
+@mixin flexbox($jc: center, $ai: center) {
+  display: flex;
+  justify-content: get-flex-value($jc);
+  align-items: get-flex-value($ai);
+}
+
+@mixin column-flexbox($jc: center, $ai: center) {
+  flex-direction: column;
+  @include flexbox($jc, $ai);
+}
