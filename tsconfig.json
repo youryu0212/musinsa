@@ -17,8 +17,7 @@
     "skipLibCheck": true,
     "strictFunctionTypes": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true
+    "noImplicitThis": true
   },
   "include": ["src"]
 }

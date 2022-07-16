@@ -17,3 +17,15 @@
     cursor: pointer;
   }
 }
+
+.search-bar__button-img {
+  @include flexbox();
+}
+
+.search-bar__input-box {
+  border: 1px solid #ccc;
+}
+
+.hide {
+  display: none;
+}
