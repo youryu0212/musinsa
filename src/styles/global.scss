@@ -11,15 +11,6 @@ body {
   height: 100%;
 }
 
-header {
-  background-color: #fff;
-}
-
-main {
-  background-color: #fff;
-  flex-grow: 1;
-}
-
 .app {
   @include column-flexbox('start', 'stretch');
   flex-direction: column;

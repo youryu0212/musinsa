@@ -3,8 +3,10 @@
 @import './global';
 
 @import 'src/layout/main';
+@import 'src/layout/header';
 @import 'src/components/mainLogo/mainLogo';
 @import 'src/components/filterArea/filterArea';
 @import 'src/components/selectedArea/selectedArea';
 @import 'src/components/searchBar/searchBar';
 @import 'src/components/product/product';
+@import 'src/components/loading/loading';
