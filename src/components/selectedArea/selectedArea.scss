@@ -17,6 +17,11 @@
   color: #fff;
 
   .close-btn {
-    margin-left: 7px;
+    padding-left: 7px;
+    cursor: pointer;
   }
+}
+
+.reset-btn {
+  cursor: pointer;
 }
