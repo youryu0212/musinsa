@@ -10,6 +10,7 @@
   border-radius: 18px;
   margin-right: 5px;
   font-size: 14px;
+  cursor: pointer;
   .small-search-btn {
     margin-left: 7px;
     @include flexbox();
@@ -17,6 +18,13 @@
 }
 
 .active-filter {
+  color: #0078ff;
+}
+
+.active-search-bar {
   background-color: #0078ff;
   color: #fff;
+  div {
+    color: #fff;
+  }
 }
