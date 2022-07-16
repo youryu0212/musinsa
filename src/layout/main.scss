@@ -1,3 +1,8 @@
+.main {
+  background-color: #fff;
+  flex-grow: 1;
+  margin-top: 10px;
+}
 .no-search-result {
   @include flexbox();
   height: 100%;

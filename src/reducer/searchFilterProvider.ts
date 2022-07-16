@@ -6,6 +6,7 @@ type ActionType = {
   words?: string;
   isOpen?: boolean;
   fromSearchBar?: boolean;
+  length?: number;
 };
 
 const searchFilterInitState = {
@@ -43,6 +44,11 @@ const searchFilterReducer = (state, action: ActionType) => {
       return {
         ...state,
         isOpen: action.isOpen,
+      };
+    case 'SEARCH_RESULT':
+      return {
+        ...state,
+        length: action.length,
       };
   }
 };
