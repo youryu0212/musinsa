@@ -15,12 +15,6 @@ export type ProductType = {
   saleRate: number;
 };
 
-const tag = '[product]';
-
-const handleClick = () => {
-  console.log(tag);
-};
-
 const createProduct = ({
   goodsName,
   brandName,
@@ -36,15 +30,13 @@ const createProduct = ({
   const ProductImg = createProductImg({ imageUrl, isExclusive, goodsName, isSoldOut });
   const ProductInfo = createProductInfo({ brandName, goodsName, normalPrice, price, saleRate, isSale });
 
-  const childComponents = [ProductImg, ...ProductInfo];
+  const childComponents = [ProductImg, ProductInfo];
   const productProps = {
     tag: 'div',
     attributes: { class: 'product' },
     childComponents,
-    eventName: 'click',
-    handler: handleClick,
   };
-  console.log(ProductImg, ProductInfo);
+
   return render(productProps);
 };
 
