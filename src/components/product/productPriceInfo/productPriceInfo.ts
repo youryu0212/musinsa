@@ -1,5 +1,5 @@
-import { appendChild, createElement, qs } from 'src/utils/dom';
-import { go, map } from 'src/utils/utils';
+import { appendChild, createElement, qs, render } from 'src/utils/dom';
+import { getWonTemplate, go, map } from 'src/utils/utils';
 import { ProductType } from '../product';
 
 type ProductInfoType = Pick<ProductType, 'brandName' | 'goodsName' | 'normalPrice' | 'price' | 'saleRate' | 'isSale'>;
@@ -51,18 +51,22 @@ const createProductInfo = ({ brandName, goodsName, normalPrice, price, saleRate,
   const productInfoDict = new Map();
   productInfoDict.set('product-info__brand', brandName);
   productInfoDict.set('product-info__title', goodsName);
-  productInfoDict.set('product-info__price', normalPrice);
-  productInfoDict.set('product-info__sale-rate', isSale ? saleRate : '');
-  productInfoDict.set('product-info__normal-price', isSale ? price : '');
+  productInfoDict.set('product-info__price', getWonTemplate(normalPrice));
+  productInfoDict.set('product-info__sale-rate', isSale ? `${saleRate}%` : '');
+  productInfoDict.set('product-info__normal-price', isSale ? getWonTemplate(price) : '');
 
-  const components = go(
+  const childComponents = go(
     productInfoClassNameList,
     createElementFromList,
     addPriceAreaInfoElement,
     map((element) => fillContent(element, productInfoDict)),
   );
 
-  return components;
+  return render({
+    tag: 'div',
+    attributes: { class: 'product-info' },
+    childComponents,
+  });
 };
 
 export default createProductInfo;
