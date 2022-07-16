@@ -1,12 +1,7 @@
 import { render } from 'src/utils/dom';
 import createHeader from 'src/layout/header';
 import createMain from 'src/layout/main';
-
-const tag = '[app]';
-
-const handleClick = () => {
-  console.log(tag);
-};
+import createLoading from './components/loading/loading';
 
 const createApp = () => {
   const Header = createHeader();
@@ -16,8 +11,6 @@ const createApp = () => {
   const appProps = {
     tag: 'div',
     attributes: { class: 'app' },
-    eventName: 'click',
-    handler: handleClick,
     childComponents,
   };
   return render(appProps);

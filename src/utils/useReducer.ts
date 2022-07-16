@@ -27,6 +27,10 @@ export const useReducer = (reducer, initState) => {
 
   const setObserver = (stateName: string, ...callback) => {
     const { subscriber } = store;
+
+    if (!subscriber.hasOwnProperty(stateName)) {
+      store.subscriber[stateName] = [...callback];
+    }
     store.subscriber[stateName] = [...subscriber[stateName], ...callback];
   };
 

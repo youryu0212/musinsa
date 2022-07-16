@@ -31,6 +31,7 @@ const createHeader = () => {
 
   const headerProps = {
     tag: 'header',
+    attributes: { class: 'header' },
     childComponents,
   };
 

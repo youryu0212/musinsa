@@ -16,6 +16,10 @@
   background-color: #0078ff;
   color: #fff;
 
+  &:first-child {
+    margin-left: 15px;
+  }
+
   .close-btn {
     padding-left: 7px;
     cursor: pointer;

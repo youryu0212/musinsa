@@ -45,3 +45,20 @@ export const isIterable = (iter): boolean => {
 export const isString = (arg): boolean => {
   return typeof arg === 'string';
 };
+
+export const fetchData = async (url: string, { method, bodyData }: any = {}) => {
+  const headers = {
+    'Content-Type': 'application/json; charset=utf-8',
+  };
+  const body = JSON.stringify(bodyData);
+  const fetchParams = { method, headers, body };
+  try {
+    const data = await fetch(url, fetchParams);
+    return data.json();
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+};
+
+export const getWonTemplate = (num: number) => `${num.toLocaleString()}원`;
