@@ -5,6 +5,8 @@ type HtmlElementType = HTMLElement | Document;
 type attributeType = {
   class?: string;
   placeholder?: string;
+  alt?: string;
+  src?: string;
 };
 
 type componentType = HTMLElement | string | (string | HTMLElement)[];
