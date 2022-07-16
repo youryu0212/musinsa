@@ -13,9 +13,12 @@ type RenderElementType = {
   tag: string;
   attributes?: attributeType;
   eventName?: string;
-  handler?: () => void;
+  handler?: (any) => void;
   childComponents?: componentType;
+  selector?: string;
 };
+
+type SetEventType = Pick<RenderElementType, 'eventName' | 'handler' | 'selector'> & { element: HTMLElement };
 
 export function qs(selector: string, scope: HtmlElementType = document) {
   if (!selector) throw 'no selector';
@@ -34,22 +37,14 @@ export const on = ($target: HtmlElementType, eventName: string, handler) => {
 };
 
 export const delegate = ($target: HtmlElementType, eventName: string, selector: string, handler) => {
+  const children = qsAll(selector, $target);
+  const isTarget = (target) => children.includes(target) || target.closest(selector);
   const emitEvent = (event) => {
-    const potentialElements = qsAll(selector, $target);
-
-    for (const potentialElement of potentialElements) {
-      if (potentialElement === event.$target) {
-        return handler.call(event.$target, event);
-      }
-    }
+    if (!isTarget(event.target)) return false;
+    handler(event);
   };
 
   on($target, eventName, emitEvent);
-};
-
-export const emit = ($target: HtmlElementType, eventName: string, detail) => {
-  const event = new CustomEvent(eventName, { detail });
-  $target.dispatchEvent(event);
 };
 
 export const appendChildBeforeEnd = ($target: Element | HTMLElement, template: string | HTMLElement) => {
@@ -92,13 +87,25 @@ export const createElement = (tag: string, attributes?: attributeType) => {
   return $node;
 };
 
-export const render = ({ tag, attributes, eventName, handler, childComponents }: RenderElementType) => {
+const setEvent = ({ element, eventName, handler, selector }: SetEventType) => {
+  selector ? delegate(element, eventName, selector, handler) : on(element, eventName, handler);
+  return element;
+};
+
+export const render = ({ tag, attributes, eventName, handler, childComponents, selector }: RenderElementType) => {
   return go(
     createElement(tag, attributes),
-    (element) => {
-      on(element, eventName, handler);
-      return element;
-    },
-    (element) => appendChild(element, childComponents),
+    (element) => setEvent({ element, eventName, handler, selector }),
+    (element) => appendChild(element, childComponents || ''),
   );
+};
+
+export const toggleClassName = ($element: HTMLElement, className: string): boolean => {
+  return $element.classList.toggle(className);
+};
+
+export const innerHTML = ($target: Element | HTMLElement, components) => {
+  $target.innerHTML = '';
+  appendChild($target, components);
+  return $target;
 };
