@@ -5,12 +5,21 @@ import { innerHTML, qs, render } from 'src/utils/dom';
 import { go, map } from 'src/utils/utils';
 import createSelectedFilter from './selectedFilter/selectedFilter';
 
-const reRender = (words) =>
-  go(
+const reRender = (words) => {
+  const $selectedArea = qs('.selected-area');
+  const $selectedFilterArea = qs('.selected-filter-area');
+
+  if (!words.length) {
+    $selectedArea.classList.add('hide');
+    return;
+  }
+  $selectedArea.classList.remove('hide');
+  return go(
     words,
     map(({ word }) => createSelectedFilter(word)),
-    (words) => innerHTML(qs('.selected-filter-area'), words),
+    (words) => innerHTML($selectedFilterArea, words),
   );
+};
 
 const resetFilterButton = () => {
   const { dispatch } = searchFilterContext;
@@ -53,7 +62,7 @@ const createSelectedArea = () => {
 
   const selectedAreaProps = {
     tag: 'div',
-    attributes: { class: 'selected-area' },
+    attributes: { class: 'selected-area hide' },
     childComponents,
   };
   return render(selectedAreaProps);
