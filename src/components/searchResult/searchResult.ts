@@ -74,6 +74,9 @@ const checkFullContentHeight = ($searchResult) => {
 
 const renderProducts = (productsData, $searchResult) => {
   let renderFinishFlag = false;
+  if ($searchResult.classList.contains('hide')) {
+    $searchResult.classList.remove('hide');
+  }
 
   const renderProduct = (productData) => {
     const $product = Product(productData);
