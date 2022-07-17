@@ -2,6 +2,7 @@
   background-color: #fff;
   flex-grow: 1;
   margin-top: 10px;
+  width: 375px;
 }
 .no-search-result {
   @include column-flexbox();
