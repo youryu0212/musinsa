@@ -6,13 +6,13 @@ type MainLogoType = {
 };
 
 const MainLogo = ({ className }: MainLogoType) => {
-  const searchFailProps = {
+  const mainLogoProps = {
     tag: 'div',
     attributes: { class: className },
     childComponents: LOGO,
   };
 
-  return render(searchFailProps);
+  return render(mainLogoProps);
 };
 
 export default MainLogo;

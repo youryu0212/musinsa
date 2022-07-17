@@ -4,8 +4,14 @@
   margin-top: 10px;
 }
 .no-search-result {
-  @include flexbox();
+  @include column-flexbox();
   height: 100%;
+  div {
+    margin-top: 15px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #aaaaaa;
+  }
 }
 
 .search-result {

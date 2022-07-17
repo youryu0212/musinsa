@@ -10,16 +10,16 @@ const handleError = ({ target }) => {
 };
 
 const ProductImg = ({ imageUrl, isExclusive, goodsName, isSoldOut }: ProductImgType) => {
-  const Img = render({
+  const $img = render({
     tag: 'img',
     attributes: { class: `product-img ${isSoldOut ? 'sold-out__img' : ''}`, src: imageUrl, alt: goodsName },
     eventName: 'error',
     handler: handleError,
   });
-  const Exclusive = isExclusive ? `<span class="exclusive">독점</span>` : '';
-  const SoldOut = isSoldOut ? `<div class="sold-out__text">SOLD OUT</div>` : '';
+  const $exclusive = isExclusive ? `<span class="exclusive">독점</span>` : '';
+  const $soldout = isSoldOut ? `<div class="sold-out__text">SOLD OUT</div>` : '';
 
-  const childComponents = [Img, Exclusive, SoldOut];
+  const childComponents = [$img, $exclusive, $soldout];
 
   return render({
     tag: 'div',

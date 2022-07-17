@@ -35,11 +35,11 @@ const filterActiveButton = map((element) => {
 });
 
 const setActiveButton = () => {
-  const filterButtons = qsAll('.filter-btn');
+  const $filterButtons = qsAll('.filter-btn');
 
   go(
-    filterButtons,
-    map((filterButton) => qs('.word', filterButton)),
+    $filterButtons,
+    map(($filterButton) => qs('.word', $filterButton)),
     filterActiveButton,
   );
 };
@@ -49,8 +49,8 @@ const handleClickFilterButton = ({ target }) => {
   if (!filterButton) {
     return;
   }
-  const wordElement = qs('.word', filterButton);
-  const { innerHTML } = wordElement;
+  const $wordElement = qs('.word', filterButton);
+  const { innerHTML } = $wordElement;
 
   if (isSearchButton(innerHTML)) {
     const isOpen = toggleClassName(filterButton, 'active-search-bar');
@@ -58,7 +58,7 @@ const handleClickFilterButton = ({ target }) => {
     return;
   }
 
-  if (!wordElement.classList.contains('active-filter')) {
+  if (!$wordElement.classList.contains('active-filter')) {
     dispatch({ type: 'SEARCH', words: innerHTML, notify: [SEARCH_STATE_NAME] });
     return;
   }

@@ -1,13 +1,11 @@
+import { SEARCH_FAIL } from 'src/assets/svg';
 import { render } from 'src/utils/dom';
-import SearchFail from '../searchFail/searchFail';
 
 const NoSearchResult = () => {
-  const $searchFail = SearchFail();
-
   return render({
     tag: 'div',
     attributes: { class: 'no-search-result hide' },
-    childComponents: $searchFail,
+    childComponents: [SEARCH_FAIL, '<div>검색 결과 없음</div>'],
   });
 };
 
