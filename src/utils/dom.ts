@@ -1,6 +1,6 @@
 import { go, isIterable, isString, map } from './utils';
 
-type HtmlElementType = HTMLElement | Document;
+type HtmlElementType = HTMLElement | Document | Element;
 
 type attributeType = {
   class?: string;
