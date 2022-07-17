@@ -2,7 +2,9 @@
 
 #### 👨 개발자 : 류성현 (Hoi)
 
-### 구동 방법
+### ✅ 구동 방법
+
+### [데모페이지](https://youryu0212.github.io/musinsa/)
 
 - build해서 실행하기
 
@@ -27,9 +29,10 @@ npm run build
 npm ci
 npm start
 
+
 ```
 
-### 바닐라 typescript로 프로젝트를 선택한 이유
+### 💭 바닐라 typescript로 프로젝트를 선택한 이유
 
 - 바닐라 Typescript
 
@@ -57,6 +60,10 @@ webpack으로 ts, scss 파일을 번들링 했습니다. 프로덕션에서는 h
 - 유틸 함수 : [https://github.com/youryu0212/musinsa/wiki/[FE]-유틸-함수-상세설명](https://github.com/youryu0212/musinsa/wiki/%5BFE%5D-%EC%9C%A0%ED%8B%B8-%ED%95%A8%EC%88%98-%EC%83%81%EC%84%B8%EC%84%A4%EB%AA%85)
 - DOM 조작 함수 : [https://github.com/youryu0212/musinsa/wiki/[FE]-DOM-유틸-함수-상세-스펙](https://github.com/youryu0212/musinsa/wiki/%5BFE%5D-DOM-%EC%9C%A0%ED%8B%B8-%ED%95%A8%EC%88%98-%EC%83%81%EC%84%B8-%EC%8A%A4%ED%8E%99)
 - 상태관리 구조 : [https://github.com/youryu0212/musinsa/wiki/[FE]-상태관리-구조](https://github.com/youryu0212/musinsa/wiki/%5BFE%5D-%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
+
+### 🖥 시연 영상
+
+![musinsa](https://user-images.githubusercontent.com/87521172/179394492-a42a4cfc-5d67-4d5a-bb54-867663eaf5b0.gif)
 
 ### 📌 Branch
 
