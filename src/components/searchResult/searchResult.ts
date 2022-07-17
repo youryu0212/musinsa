@@ -7,8 +7,8 @@ import {
   SEARCH_STATE_NAME,
   WIDTH_OFFSET,
 } from 'src/constants/constants';
-import productContext from 'src/reducer/productProvider';
-import searchFilterContext from 'src/reducer/searchFilterProvider';
+import productContext from 'src/context/productProvider';
+import searchFilterContext from 'src/context/searchFilterProvider';
 import { appendChild, qs, qsAll, render } from 'src/utils/dom';
 import { fetchData, filter, go, map, pipe, reduce } from 'src/utils/utils';
 

@@ -1,6 +1,6 @@
 import { SEARCH_BUTTON } from 'src/assets/svg';
 import { SEARCH_BAR_OPEN_STATE_NAME, SEARCH_STATE_NAME } from 'src/constants/constants';
-import searchFilterContext from 'src/reducer/searchFilterProvider';
+import searchFilterContext from 'src/context/searchFilterProvider';
 import { qs, render } from 'src/utils/dom';
 
 type SearchBarType = {
