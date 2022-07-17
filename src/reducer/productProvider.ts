@@ -1,3 +1,4 @@
+import { PRODUCT_TIMER_KEY } from 'src/constants/constants';
 import { useReducer } from 'src/utils/useReducer';
 
 type ActionType = {
@@ -9,6 +10,7 @@ type ActionType = {
 const productInitState = {
   waitingRenderingProduct: [],
   render: [],
+  timer: { [PRODUCT_TIMER_KEY]: null },
 };
 
 const productReducer = (state, action: ActionType) => {
@@ -28,6 +30,13 @@ const productReducer = (state, action: ActionType) => {
       return {
         ...state,
         waitingRenderingProduct: state.waitingRenderingProduct.slice(i),
+      };
+    case 'RESET':
+      clearTimeout(state.timer[PRODUCT_TIMER_KEY]);
+      return {
+        waitingRenderingProduct: [],
+        render: [],
+        timer: { [PRODUCT_TIMER_KEY]: null },
       };
   }
 };
