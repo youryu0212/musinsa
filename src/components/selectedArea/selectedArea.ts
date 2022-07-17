@@ -5,17 +5,22 @@ import { innerHTML, qs, render } from 'src/utils/dom';
 import { go, map } from 'src/utils/utils';
 import SelectedFilter from './selectedFilter/selectedFilter';
 
-const reRender = (words) => {
+const toggleSelectedAreaDisplay = (words) => {
   const $selectedArea = qs('.selected-area');
-  const $selectedFilterArea = qs('.selected-filter-area');
-
   if (!words.length) {
     $selectedArea.classList.add('hide');
-    return;
+    return words;
   }
   $selectedArea.classList.remove('hide');
+  return words;
+};
+
+const reRender = (words) => {
+  const $selectedFilterArea = qs('.selected-filter-area');
+
   return go(
     words,
+    toggleSelectedAreaDisplay,
     map(({ word }) => SelectedFilter(word)),
     (words) => innerHTML($selectedFilterArea, words),
   );
