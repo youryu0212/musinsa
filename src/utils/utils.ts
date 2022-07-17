@@ -62,3 +62,15 @@ export const fetchData = async (url: string, { method, bodyData }: any = {}) => 
 };
 
 export const getWonTemplate = (num: number) => `${num.toLocaleString()}원`;
+
+export const throttling = (timer, key: string, callback, setupFnc = null, delay = 2000) => {
+  if (!timer[key]) {
+    if (setupFnc) {
+      setupFnc();
+    }
+    timer[key] = setTimeout(() => {
+      callback();
+      timer[key] = null;
+    }, delay);
+  }
+};

@@ -1,10 +1,19 @@
 import createProduct from 'src/components/product/product';
-import { API_URLS, FILTER_KEYWORDS, SEARCH_RESULT_STATE_NAME, SEARCH_STATE_NAME } from 'src/constants/constants';
+import {
+  API_URLS,
+  FILTER_KEYWORDS,
+  HEIGHT_OFFSET,
+  SEARCH_RESULT_STATE_NAME,
+  SEARCH_STATE_NAME,
+  WIDTH_OFFSET,
+} from 'src/constants/constants';
+import productContext from 'src/reducer/productProvider';
 import searchFilterContext from 'src/reducer/searchFilterProvider';
-import { appendChild, qs, render } from 'src/utils/dom';
+import { appendChild, qs, qsAll, render } from 'src/utils/dom';
 import { fetchData, filter, go, map, pipe, reduce } from 'src/utils/utils';
 
 const { store, setObserver, dispatch } = searchFilterContext;
+const { store: productStore, setObserver: setObserverProduct, dispatch: dispatchProduct } = productContext;
 
 const mergeAllProductData = (productsData) =>
   go(
@@ -49,6 +58,32 @@ const filterProduct = (productData, currentSearchkeywords, filterKey, filterValu
   return false;
 };
 
+const renderProducts = (productsData, $searchResult) => {
+  const { x, width, y, height } = qs('.app').getBoundingClientRect();
+  const APP_HEIGHT = y + height - HEIGHT_OFFSET;
+  const APP_WIDTH = x + width - WIDTH_OFFSET;
+  let renderFinishFlag = false;
+  return map((productData) => {
+    const Product = createProduct(productData);
+
+    if (renderFinishFlag) {
+      dispatchProduct({ type: 'ADD', product: Product });
+      return;
+    }
+
+    appendChild($searchResult, Product);
+
+    const $product = qsAll('.product', $searchResult);
+    const $lastProduct = $product[$product.length - 1];
+    const { x, y, width, height } = $lastProduct.getBoundingClientRect();
+    if (x + width >= APP_WIDTH && y + height >= APP_HEIGHT) {
+      renderFinishFlag = true;
+    }
+
+    return productsData;
+  }, productsData);
+};
+
 const renderSearchResult = async () => {
   const { state } = store;
   const productsFetchData = await Promise.allSettled(map((url) => fetchData(url), API_URLS));
@@ -89,18 +124,26 @@ const renderSearchResult = async () => {
     productsData,
     map((productData) => filterAllCondition(productData)),
     filter((productData) => !!productData),
-    map((productData) => {
-      const Product = createProduct(productData);
-      appendChild($searchResult, Product);
-    }),
+    (productsData) => renderProducts(productsData, $searchResult),
     (productsData) =>
       dispatch({ type: 'SEARCH_RESULT', length: productsData.length, notify: [SEARCH_RESULT_STATE_NAME] }),
+  );
+};
+
+const renderMoreProduct = () => {
+  const $searchResult = qs('.search-result');
+  const { state } = productStore;
+  const { render: renderList } = state;
+  go(
+    renderList,
+    map((element) => appendChild($searchResult, element)),
   );
 };
 
 const createSearchResult = () => {
   renderSearchResult();
   setObserver(SEARCH_STATE_NAME, renderSearchResult);
+  setObserverProduct('RENDER', renderMoreProduct);
 
   return render({
     tag: 'div',

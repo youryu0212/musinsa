@@ -16,3 +16,6 @@ export const FILTER_KEYWORDS = new Map([
 ]);
 
 export const CANDIDATE_IMG_URL = 'https://image.msscdn.net/musinsaUI/homework/data/img.jpg';
+
+export const WIDTH_OFFSET = 5;
+export const HEIGHT_OFFSET = 5;
