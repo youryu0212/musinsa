@@ -6,6 +6,7 @@ type ProductImgType = Pick<ProductType, 'imageUrl' | 'isExclusive' | 'goodsName'
 
 const handleError = ({ target }) => {
   target.src = CANDIDATE_IMG_URL;
+  console.clear();
 };
 
 const ProductImg = ({ imageUrl, isExclusive, goodsName, isSoldOut }: ProductImgType) => {

@@ -2,7 +2,7 @@ import { appendChild, qs, render } from 'src/utils/dom';
 import Header from 'src/layout/header';
 import Main from 'src/layout/main';
 import { HEIGHT_OFFSET, PRODUCT_TIMER_KEY } from './constants/constants';
-import productContext from './reducer/productProvider';
+import productContext from './context/productProvider';
 import Loading from './components/loading/loading';
 import { throttling } from './utils/utils';
 

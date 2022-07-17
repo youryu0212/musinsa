@@ -3,7 +3,7 @@ import MainLogo from 'src/components/mainLogo/mainLogo';
 import FilterArea from 'src/components/filterArea/filterArea';
 import SelectedArea from 'src/components/selectedArea/selectedArea';
 import { render, toggleClassName } from 'src/utils/dom';
-import searchFilterContext from 'src/reducer/searchFilterProvider';
+import searchFilterContext from 'src/context/searchFilterProvider';
 import { SEARCH_BAR_OPEN_STATE_NAME } from 'src/constants/constants';
 
 const Header = () => {

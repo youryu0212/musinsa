@@ -1,6 +1,6 @@
 import { RESET_BUTTON } from 'src/assets/svg';
 import { SEARCH_STATE_NAME } from 'src/constants/constants';
-import searchFilterContext from 'src/reducer/searchFilterProvider';
+import searchFilterContext from 'src/context/searchFilterProvider';
 import { innerHTML, qs, render } from 'src/utils/dom';
 import { go, map } from 'src/utils/utils';
 import SelectedFilter from './selectedFilter/selectedFilter';

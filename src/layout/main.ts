@@ -1,7 +1,7 @@
 import NoSearchResult from 'src/components/searchResult/noSearchResult';
 import SearchResult from 'src/components/searchResult/searchResult';
 import { SEARCH_RESULT_STATE_NAME } from 'src/constants/constants';
-import searchFilterContext from 'src/reducer/searchFilterProvider';
+import searchFilterContext from 'src/context/searchFilterProvider';
 import { qs, render } from 'src/utils/dom';
 
 const { store, setObserver } = searchFilterContext;
