@@ -1,5 +1,5 @@
-import createNoSearchResult from 'src/components/searchResult/noSearchResult';
-import createSearchResult from 'src/components/searchResult/searchResult';
+import NoSearchResult from 'src/components/searchResult/noSearchResult';
+import SearchResult from 'src/components/searchResult/searchResult';
 import { SEARCH_RESULT_STATE_NAME } from 'src/constants/constants';
 import searchFilterContext from 'src/reducer/searchFilterProvider';
 import { qs, render } from 'src/utils/dom';
@@ -20,10 +20,10 @@ const renderSearchResult = () => {
   $noSearchResult.classList.remove('hide');
 };
 
-const createMain = () => {
-  const searchResult: HTMLElement = createSearchResult();
-  const noSearchResult: HTMLElement = createNoSearchResult();
-  const childComponents: HTMLElement[] = [searchResult, noSearchResult];
+const Main = () => {
+  const $searchResult: HTMLElement = SearchResult();
+  const $noSearchResult: HTMLElement = NoSearchResult();
+  const childComponents: HTMLElement[] = [$searchResult, $noSearchResult];
 
   setObserver(SEARCH_RESULT_STATE_NAME, renderSearchResult);
   return render({
@@ -33,4 +33,4 @@ const createMain = () => {
   });
 };
 
-export default createMain;
+export default Main;

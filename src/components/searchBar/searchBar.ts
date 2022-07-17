@@ -21,7 +21,7 @@ const handleSearchSubmit = (evt) => {
   searchButton.classList.remove(searchButtonClassName);
 };
 
-const createSearchBar = ({ className, inputPlaceHolder }: SearchBarType) => {
+const SearchBar = ({ className, inputPlaceHolder }: SearchBarType) => {
   const searchButton = render({
     tag: 'div',
     attributes: { class: 'search-bar__button-img' },
@@ -46,4 +46,4 @@ const createSearchBar = ({ className, inputPlaceHolder }: SearchBarType) => {
   return render(searchBarProps);
 };
 
-export default createSearchBar;
+export default SearchBar;

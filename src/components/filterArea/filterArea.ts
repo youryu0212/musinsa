@@ -3,7 +3,7 @@ import { SEARCH_BAR_OPEN_STATE_NAME, SEARCH_STATE_NAME } from 'src/constants/con
 import searchFilterContext from 'src/reducer/searchFilterProvider';
 import { qs, qsAll, render, toggleClassName } from 'src/utils/dom';
 import { go, map } from 'src/utils/utils';
-import createFilterButton from './filterButton/filterButton';
+import FilterButton from './filterButton/filterButton';
 
 const filterButtonClassName = '.filter-btn';
 
@@ -14,38 +14,37 @@ const isSearchButton = (word) => {
   return word === '검색';
 };
 
-const filterActiveButton = (words, wordElement) =>
-  map((wordElement) => {
-    const { innerHTML } = wordElement;
-    for (const keyword of words) {
-      const { word, fromSearchBar } = keyword;
-      if (innerHTML === word) {
-        wordElement.classList.add('active-filter');
-        return wordElement;
-      }
-
-      if (fromSearchBar && isSearchButton(innerHTML)) {
-        wordElement.classList.add('active-filter');
-        return wordElement;
-      }
-    }
-    wordElement.classList.remove('active-filter');
-    return wordElement;
-  })(wordElement);
-
-const setActiveButton = () => {
+const filterActiveButton = map((element) => {
   const { state } = store;
   const { words } = state;
+  const { innerHTML } = element;
+  for (const keyword of words) {
+    const { word, fromSearchBar } = keyword;
+    if (innerHTML === word) {
+      element.classList.add('active-filter');
+      return element;
+    }
+
+    if (fromSearchBar && isSearchButton(innerHTML)) {
+      element.classList.add('active-filter');
+      return element;
+    }
+  }
+  element.classList.remove('active-filter');
+  return element;
+});
+
+const setActiveButton = () => {
   const filterButtons = qsAll('.filter-btn');
 
   go(
     filterButtons,
     map((filterButton) => qs('.word', filterButton)),
-    (wordElement) => filterActiveButton(words, wordElement),
+    filterActiveButton,
   );
 };
 
-const handleClick = ({ target }) => {
+const handleClickFilterButton = ({ target }) => {
   const filterButton = target.closest(filterButtonClassName);
   if (!filterButton) {
     return;
@@ -68,7 +67,7 @@ const handleClick = ({ target }) => {
   return;
 };
 
-const createFilterArea = () => {
+const FilterArea = () => {
   const searchButton = render({
     tag: 'div',
     attributes: { class: 'small-search-btn' },
@@ -85,18 +84,18 @@ const createFilterArea = () => {
   const childComponents = go(
     tagList,
     map((keyword) => createButton(keyword)),
-    map((childComponents) => createFilterButton({ childComponents })),
+    map((childComponents) => FilterButton({ childComponents })),
   );
 
   const filterProps = {
     tag: 'div',
     attributes: { class: 'filter-area' },
     eventName: 'click',
-    handler: handleClick,
+    handler: handleClickFilterButton,
     childComponents,
     selector: '.filter-btn',
   };
   return render(filterProps);
 };
 
-export default createFilterArea;
+export default FilterArea;

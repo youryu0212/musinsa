@@ -19,3 +19,5 @@ export const CANDIDATE_IMG_URL = 'https://image.msscdn.net/musinsaUI/homework/da
 
 export const WIDTH_OFFSET = 5;
 export const HEIGHT_OFFSET = 5;
+
+export const PRODUCT_TIMER_KEY = 'productThrottling';

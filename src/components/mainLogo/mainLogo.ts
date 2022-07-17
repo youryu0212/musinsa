@@ -5,22 +5,14 @@ type MainLogoType = {
   className: string;
 };
 
-const tag = '[Main Logo]';
-
-const createMainLogo = ({ className }: MainLogoType) => {
-  const handleClick = () => {
-    console.log(tag);
-  };
-
+const MainLogo = ({ className }: MainLogoType) => {
   const searchFailProps = {
     tag: 'div',
     attributes: { class: className },
-    eventName: 'click',
-    handler: handleClick,
     childComponents: LOGO,
   };
 
   return render(searchFailProps);
 };
 
-export default createMainLogo;
+export default MainLogo;

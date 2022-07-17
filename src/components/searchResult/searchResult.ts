@@ -1,4 +1,4 @@
-import createProduct from 'src/components/product/product';
+import Product from 'src/components/product/product';
 import {
   API_URLS,
   FILTER_KEYWORDS,
@@ -15,16 +15,14 @@ import { fetchData, filter, go, map, pipe, reduce } from 'src/utils/utils';
 const { store, setObserver, dispatch } = searchFilterContext;
 const { store: productStore, setObserver: setObserverProduct, dispatch: dispatchProduct } = productContext;
 
-const mergeAllProductData = (productsData) =>
-  go(
-    productsData,
-    map(({ value }) => value.data),
-    map((product) => product.list),
-    reduce((a, b) => [...a, ...b]),
-  );
+const mergeAllProductData = pipe(
+  map(({ value }) => value.data),
+  map((product) => product.list),
+  reduce((a, b) => [...a, ...b]),
+);
 
-const checkSpecificCondition = (productData, condition: string) => {
-  return !!filter((productName) => productName === condition, productData).length;
+const checkSpecificCondition = (searchKeywords, condition: string) => {
+  return !!filter((searchKeyword) => searchKeyword === condition, searchKeywords).length;
 };
 
 const getCurrentSearchFilter = (state) => {
@@ -49,74 +47,90 @@ const filterProduct = (productData, currentSearchkeywords, filterKey, filterValu
   if (filterKey === '품절포함' && isSoldOut(productData, currentSearchkeywords, filterKey, filterValue)) {
     return false;
   }
+
   if (!checkSpecificCondition(currentSearchkeywords, filterKey)) {
     return true;
   }
-  if (productData[filterValue]) {
+
+  if (filterKey === '품절포함' || productData[filterValue]) {
+    return true;
+  }
+  return false;
+};
+
+const checkFullContentHeight = ($searchResult) => {
+  const { x: appX, width: appWidth, y: appY, height: appHeight } = qs('.app').getBoundingClientRect();
+  const APP_HEIGHT = appY + appHeight - HEIGHT_OFFSET;
+  const APP_WIDTH = appX + appWidth - WIDTH_OFFSET;
+
+  const $productAll = qsAll('.product', $searchResult);
+  const $lastProduct = $productAll[$productAll.length - 1];
+  const { x, y, width, height } = $lastProduct.getBoundingClientRect();
+  if (x + width >= APP_WIDTH && y + height >= APP_HEIGHT) {
     return true;
   }
   return false;
 };
 
 const renderProducts = (productsData, $searchResult) => {
-  const { x, width, y, height } = qs('.app').getBoundingClientRect();
-  const APP_HEIGHT = y + height - HEIGHT_OFFSET;
-  const APP_WIDTH = x + width - WIDTH_OFFSET;
   let renderFinishFlag = false;
-  return map((productData) => {
-    const Product = createProduct(productData);
+
+  const renderProduct = (productData) => {
+    const $product = Product(productData);
 
     if (renderFinishFlag) {
-      dispatchProduct({ type: 'ADD', product: Product });
+      dispatchProduct({ type: 'ADD', product: $product });
       return;
     }
 
-    appendChild($searchResult, Product);
+    appendChild($searchResult, $product);
 
-    const $product = qsAll('.product', $searchResult);
-    const $lastProduct = $product[$product.length - 1];
-    const { x, y, width, height } = $lastProduct.getBoundingClientRect();
-    if (x + width >= APP_WIDTH && y + height >= APP_HEIGHT) {
+    if (checkFullContentHeight($searchResult)) {
       renderFinishFlag = true;
     }
 
     return productsData;
-  }, productsData);
+  };
+
+  return map(renderProduct, productsData);
 };
 
-const renderSearchResult = async () => {
-  const { state } = store;
-  const productsFetchData = await Promise.allSettled(map((url) => fetchData(url), API_URLS));
-  const productsData = mergeAllProductData(productsFetchData);
-  const currentSearchkeywords = getCurrentSearchFilter(state);
-  const searchKeyword = getSearchkeyword(currentSearchkeywords);
+// 필터 버튼에 대한 조건 필터
+const filterSelectedButton = (productData) => {
+  const currentSearchkeywords = getCurrentSearchFilter(store.state);
 
-  // 필터 버튼에 대한 조건 필터
-  const filterSelectedButton = (productData) => {
-    for (const [filterKey, filterValue] of FILTER_KEYWORDS.entries()) {
-      if (!filterProduct(productData, currentSearchkeywords, filterKey, filterValue)) {
+  for (const [filterKey, filterValue] of FILTER_KEYWORDS.entries()) {
+    if (!filterProduct(productData, currentSearchkeywords, filterKey, filterValue)) {
+      return false;
+    }
+  }
+  return productData;
+};
+
+// 검색 키워드에 대한 조건 필터
+const filterSearchKeyword = (productData) => {
+  const currentSearchkeywords = getCurrentSearchFilter(store.state);
+  const searchKeyword = getSearchkeyword(currentSearchkeywords);
+  if (searchKeyword.length) {
+    const { goodsName, brandName } = productData;
+    const productName = `${goodsName} ${brandName}`;
+
+    for (const keyword of searchKeyword) {
+      if (productName.search(keyword) === -1) {
         return false;
       }
     }
-    return productData;
-  };
+  }
+  return productData;
+};
 
-  // 검색 키워드에 대한 조건 필터
-  const filterSearchKeyword = (productData) => {
-    if (searchKeyword.length) {
-      const { goodsName, brandName } = productData;
-      const productName = `${goodsName} ${brandName}`;
+const filterAllCondition = pipe(filterSearchKeyword, filterSelectedButton);
 
-      for (const keyword of searchKeyword) {
-        if (productName.search(keyword) === -1) {
-          return false;
-        }
-      }
-    }
-    return productData;
-  };
+const renderSearchResult = async () => {
+  dispatchProduct({ type: 'RESET' });
+  const productsFetchData = await Promise.allSettled(map((url) => fetchData(url), API_URLS));
+  const productsData = mergeAllProductData(productsFetchData);
 
-  const filterAllCondition = pipe(filterSearchKeyword, filterSelectedButton);
   const $searchResult = qs('.search-result');
   $searchResult.innerHTML = '';
 
@@ -140,7 +154,7 @@ const renderMoreProduct = () => {
   );
 };
 
-const createSearchResult = () => {
+const SearchResult = () => {
   renderSearchResult();
   setObserver(SEARCH_STATE_NAME, renderSearchResult);
   setObserverProduct('RENDER', renderMoreProduct);
@@ -151,4 +165,4 @@ const createSearchResult = () => {
   });
 };
 
-export default createSearchResult;
+export default SearchResult;

@@ -1,28 +1,32 @@
 import { appendChild, qs, render } from 'src/utils/dom';
-import createHeader from 'src/layout/header';
-import createMain from 'src/layout/main';
-import { HEIGHT_OFFSET } from './constants/constants';
+import Header from 'src/layout/header';
+import Main from 'src/layout/main';
+import { HEIGHT_OFFSET, PRODUCT_TIMER_KEY } from './constants/constants';
 import productContext from './reducer/productProvider';
-import createLoading from './components/loading/loading';
+import Loading from './components/loading/loading';
 import { throttling } from './utils/utils';
 
 const { store: productStore, dispatch: dispatchProduct } = productContext;
-const timer = { productThrottling: null };
 
 const renderLoading = () => {
   const $searchResult = qs('.search-result');
-  const $loading = createLoading();
+  const $loading = Loading();
   appendChild($searchResult, $loading);
 };
 
 const removeLoading = () => {
-  qs('.loading').remove();
+  try {
+    qs('.loading').remove();
+  } catch (error) {
+    return;
+  }
 };
 
 const renderRemainProduct = () => {
   const { scrollHeight, scrollTop, clientHeight } = qs('.app');
   const { state } = productStore;
-  const { waitingRenderingProduct } = state;
+  const { waitingRenderingProduct, timer } = state;
+
   if (!waitingRenderingProduct.length) {
     return;
   }
@@ -30,7 +34,7 @@ const renderRemainProduct = () => {
   if (scrollTop + clientHeight > scrollHeight - HEIGHT_OFFSET) {
     throttling(
       timer,
-      'productThottling',
+      PRODUCT_TIMER_KEY,
       () => {
         dispatchProduct({ type: 'RENDER', length: 2, notify: ['RENDER'] });
         removeLoading();
@@ -41,11 +45,11 @@ const renderRemainProduct = () => {
   }
 };
 
-const createApp = () => {
-  const Header = createHeader();
-  const Main = createMain();
+const App = () => {
+  const $header = Header();
+  const $main = Main();
 
-  const childComponents = [Header, Main];
+  const childComponents = [$header, $main];
   const appProps = {
     tag: 'div',
     attributes: { class: 'app' },
@@ -56,4 +60,4 @@ const createApp = () => {
   return render(appProps);
 };
 
-export default createApp;
+export default App;

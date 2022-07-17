@@ -69,6 +69,9 @@ export const throttling = (timer, key: string, callback, setupFnc = null, delay 
       setupFnc();
     }
     timer[key] = setTimeout(() => {
+      if (!timer[key]) {
+        return;
+      }
       callback();
       timer[key] = null;
     }, delay);

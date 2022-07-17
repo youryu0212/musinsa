@@ -3,20 +3,25 @@ import { SEARCH_STATE_NAME } from 'src/constants/constants';
 import searchFilterContext from 'src/reducer/searchFilterProvider';
 import { innerHTML, qs, render } from 'src/utils/dom';
 import { go, map } from 'src/utils/utils';
-import createSelectedFilter from './selectedFilter/selectedFilter';
+import SelectedFilter from './selectedFilter/selectedFilter';
 
-const reRender = (words) => {
+const toggleSelectedAreaDisplay = (words) => {
   const $selectedArea = qs('.selected-area');
-  const $selectedFilterArea = qs('.selected-filter-area');
-
   if (!words.length) {
     $selectedArea.classList.add('hide');
-    return;
+    return words;
   }
   $selectedArea.classList.remove('hide');
+  return words;
+};
+
+const reRender = (words) => {
+  const $selectedFilterArea = qs('.selected-filter-area');
+
   return go(
     words,
-    map(({ word }) => createSelectedFilter(word)),
+    toggleSelectedAreaDisplay,
+    map(({ word }) => SelectedFilter(word)),
     (words) => innerHTML($selectedFilterArea, words),
   );
 };
@@ -33,7 +38,7 @@ const removeSelectedFilter = ({ target }) => {
   dispatch({ type: 'REMOVE', words: innerHTML, notify: [SEARCH_STATE_NAME] });
 };
 
-const createSelectedArea = () => {
+const SelectedArea = () => {
   const { store, setObserver } = searchFilterContext;
 
   const $selectedFilterArea = render({
@@ -68,4 +73,4 @@ const createSelectedArea = () => {
   return render(selectedAreaProps);
 };
 
-export default createSelectedArea;
+export default SelectedArea;
