@@ -13,12 +13,12 @@ const { dispatch } = searchFilterContext;
 const handleSearchSubmit = (evt) => {
   evt.preventDefault();
   const searchButtonClassName = 'active-search-bar';
-  const searchButton = qs(`.${searchButtonClassName}`);
+  const $searchButton = qs(`.${searchButtonClassName}`);
 
   const { value } = evt.target.closest('form').querySelector('input');
   dispatch({ type: 'SEARCH', words: value, fromSearchBar: true, notify: [SEARCH_STATE_NAME] });
   dispatch({ type: 'SEARCH_BAR_TOGGLE', notify: [SEARCH_BAR_OPEN_STATE_NAME] });
-  searchButton.classList.remove(searchButtonClassName);
+  $searchButton.classList.remove(searchButtonClassName);
 };
 
 const SearchBar = ({ className, inputPlaceHolder }: SearchBarType) => {

@@ -31,10 +31,10 @@ const fillContent = (element, dict) => {
   const { className } = element;
 
   for (const [targetClassName, content] of dict.entries()) {
-    const childElement = qs(`.${targetClassName}`, element);
+    const $childElement = qs(`.${targetClassName}`, element);
 
-    if (childElement) {
-      childElement.innerHTML = content;
+    if ($childElement) {
+      $childElement.innerHTML = content;
       continue;
     }
 
