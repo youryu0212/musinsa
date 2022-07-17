@@ -1,4 +1,4 @@
-import createProduct from 'src/components/product/product';
+import Product from 'src/components/product/product';
 import {
   API_URLS,
   FILTER_KEYWORDS,
@@ -15,13 +15,11 @@ import { fetchData, filter, go, map, pipe, reduce } from 'src/utils/utils';
 const { store, setObserver, dispatch } = searchFilterContext;
 const { store: productStore, setObserver: setObserverProduct, dispatch: dispatchProduct } = productContext;
 
-const mergeAllProductData = (productsData) =>
-  go(
-    productsData,
-    map(({ value }) => value.data),
-    map((product) => product.list),
-    reduce((a, b) => [...a, ...b]),
-  );
+const mergeAllProductData = pipe(
+  map(({ value }) => value.data),
+  map((product) => product.list),
+  reduce((a, b) => [...a, ...b]),
+);
 
 const checkSpecificCondition = (productData, condition: string) => {
   return !!filter((productName) => productName === condition, productData).length;
@@ -64,17 +62,17 @@ const renderProducts = (productsData, $searchResult) => {
   const APP_WIDTH = x + width - WIDTH_OFFSET;
   let renderFinishFlag = false;
   return map((productData) => {
-    const Product = createProduct(productData);
+    const $product = Product(productData);
 
     if (renderFinishFlag) {
-      dispatchProduct({ type: 'ADD', product: Product });
+      dispatchProduct({ type: 'ADD', product: $product });
       return;
     }
 
-    appendChild($searchResult, Product);
+    appendChild($searchResult, $product);
 
-    const $product = qsAll('.product', $searchResult);
-    const $lastProduct = $product[$product.length - 1];
+    const $productAll = qsAll('.product', $searchResult);
+    const $lastProduct = $productAll[$productAll.length - 1];
     const { x, y, width, height } = $lastProduct.getBoundingClientRect();
     if (x + width >= APP_WIDTH && y + height >= APP_HEIGHT) {
       renderFinishFlag = true;
@@ -140,7 +138,7 @@ const renderMoreProduct = () => {
   );
 };
 
-const createSearchResult = () => {
+const SearchResult = () => {
   renderSearchResult();
   setObserver(SEARCH_STATE_NAME, renderSearchResult);
   setObserverProduct('RENDER', renderMoreProduct);
@@ -151,4 +149,4 @@ const createSearchResult = () => {
   });
 };
 
-export default createSearchResult;
+export default SearchResult;
