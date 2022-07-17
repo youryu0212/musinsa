@@ -47,7 +47,7 @@ const fillContent = (element, dict) => {
   return element;
 };
 
-const createProductInfo = ({ brandName, goodsName, normalPrice, price, saleRate, isSale }: ProductInfoType) => {
+const ProductInfo = ({ brandName, goodsName, normalPrice, price, saleRate, isSale }: ProductInfoType) => {
   const productInfoDict = new Map();
   productInfoDict.set('product-info__brand', brandName);
   productInfoDict.set('product-info__title', goodsName);
@@ -69,4 +69,4 @@ const createProductInfo = ({ brandName, goodsName, normalPrice, price, saleRate,
   });
 };
 
-export default createProductInfo;
+export default ProductInfo;

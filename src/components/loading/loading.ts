@@ -1,6 +1,6 @@
 import { createElement, render } from 'src/utils/dom';
 
-const createLoading = () => {
+const Loading = () => {
   const Circle = createElement('div', { class: 'spinner' });
   return render({
     tag: 'div',
@@ -9,4 +9,4 @@ const createLoading = () => {
   });
 };
 
-export default createLoading;
+export default Loading;

@@ -1,6 +1,6 @@
 import { render } from 'src/utils/dom';
-import createProductImg from './productImg/productImg';
-import createProductInfo from './productPriceInfo/productPriceInfo';
+import ProductImg from './productImg/productImg';
+import ProductInfo from './productInfo/productInfo';
 
 export type ProductType = {
   goodsName: string;
@@ -15,7 +15,7 @@ export type ProductType = {
   saleRate: number;
 };
 
-const createProduct = ({
+const Product = ({
   goodsName,
   brandName,
   imageUrl,
@@ -27,10 +27,10 @@ const createProduct = ({
   price,
   saleRate,
 }: ProductType) => {
-  const ProductImg = createProductImg({ imageUrl, isExclusive, goodsName, isSoldOut });
-  const ProductInfo = createProductInfo({ brandName, goodsName, normalPrice, price, saleRate, isSale });
+  const $productImg = ProductImg({ imageUrl, isExclusive, goodsName, isSoldOut });
+  const $productInfo = ProductInfo({ brandName, goodsName, normalPrice, price, saleRate, isSale });
 
-  const childComponents = [ProductImg, ProductInfo];
+  const childComponents = [$productImg, $productInfo];
   const productProps = {
     tag: 'div',
     attributes: { class: 'product' },
@@ -40,4 +40,4 @@ const createProduct = ({
   return render(productProps);
 };
 
-export default createProduct;
+export default Product;

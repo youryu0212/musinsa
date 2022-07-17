@@ -8,7 +8,7 @@ const handleError = ({ target }) => {
   target.src = CANDIDATE_IMG_URL;
 };
 
-const createProductImg = ({ imageUrl, isExclusive, goodsName, isSoldOut }: ProductImgType) => {
+const ProductImg = ({ imageUrl, isExclusive, goodsName, isSoldOut }: ProductImgType) => {
   const Img = render({
     tag: 'img',
     attributes: { class: `product-img ${isSoldOut ? 'sold-out__img' : ''}`, src: imageUrl, alt: goodsName },
@@ -27,4 +27,4 @@ const createProductImg = ({ imageUrl, isExclusive, goodsName, isSoldOut }: Produ
   });
 };
 
-export default createProductImg;
+export default ProductImg;

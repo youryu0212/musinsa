@@ -4,7 +4,7 @@ type FilterButtonType = {
   childComponents: string | HTMLElement[];
 };
 
-const createFilterButton = ({ childComponents }: FilterButtonType) => {
+const FilterButton = ({ childComponents }: FilterButtonType) => {
   const filterProps = {
     tag: 'div',
     attributes: { class: 'filter-btn' },
@@ -13,4 +13,4 @@ const createFilterButton = ({ childComponents }: FilterButtonType) => {
   return render(filterProps);
 };
 
-export default createFilterButton;
+export default FilterButton;

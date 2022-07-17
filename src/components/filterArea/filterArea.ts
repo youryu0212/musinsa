@@ -3,7 +3,7 @@ import { SEARCH_BAR_OPEN_STATE_NAME, SEARCH_STATE_NAME } from 'src/constants/con
 import searchFilterContext from 'src/reducer/searchFilterProvider';
 import { qs, qsAll, render, toggleClassName } from 'src/utils/dom';
 import { go, map } from 'src/utils/utils';
-import createFilterButton from './filterButton/filterButton';
+import FilterButton from './filterButton/filterButton';
 
 const filterButtonClassName = '.filter-btn';
 
@@ -68,7 +68,7 @@ const handleClick = ({ target }) => {
   return;
 };
 
-const createFilterArea = () => {
+const FilterArea = () => {
   const searchButton = render({
     tag: 'div',
     attributes: { class: 'small-search-btn' },
@@ -85,7 +85,7 @@ const createFilterArea = () => {
   const childComponents = go(
     tagList,
     map((keyword) => createButton(keyword)),
-    map((childComponents) => createFilterButton({ childComponents })),
+    map((childComponents) => FilterButton({ childComponents })),
   );
 
   const filterProps = {
@@ -99,4 +99,4 @@ const createFilterArea = () => {
   return render(filterProps);
 };
 
-export default createFilterArea;
+export default FilterArea;

@@ -1,7 +1,7 @@
-import createApp from './app';
+import App from './app';
 import './styles/styles.scss';
-import { appendChild } from './utils/dom';
+import { appendChild, qs } from './utils/dom';
 
-const $root = document.querySelector('#root');
+const $root = qs('#root');
 
-appendChild($root, createApp());
+appendChild($root, App());

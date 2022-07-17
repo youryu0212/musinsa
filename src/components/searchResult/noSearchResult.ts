@@ -1,8 +1,8 @@
 import { render } from 'src/utils/dom';
-import createSearchFail from '../searchFail/searchFail';
+import SearchFail from '../searchFail/searchFail';
 
-const createNoSearchResult = () => {
-  const $searchFail = createSearchFail();
+const NoSearchResult = () => {
+  const $searchFail = SearchFail();
 
   return render({
     tag: 'div',
@@ -11,4 +11,4 @@ const createNoSearchResult = () => {
   });
 };
 
-export default createNoSearchResult;
+export default NoSearchResult;
