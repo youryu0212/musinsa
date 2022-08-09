@@ -22,18 +22,18 @@ const handleSearchSubmit = (evt) => {
 };
 
 const SearchBar = ({ className, inputPlaceHolder }: SearchBarType) => {
-  const searchButton = render({
+  const $searchButton = render({
     tag: 'div',
     attributes: { class: 'search-bar__button-img' },
     eventName: 'click',
     handler: handleSearchSubmit,
     childComponents: SEARCH_BUTTON,
   });
-  const SearchBoxTemplate = `
+  const $SearchBoxTemplate = `
     <input type="text" class="search-bar__input-box" placeholder="${inputPlaceHolder}" alt="search-bar"/>
   `;
 
-  const childComponents = [searchButton, SearchBoxTemplate];
+  const childComponents = [$searchButton, $SearchBoxTemplate];
 
   const searchBarProps = {
     tag: 'form',

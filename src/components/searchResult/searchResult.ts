@@ -39,7 +39,7 @@ const getSearchkeyword = (currentSearchkeywords) => {
   );
 };
 
-const isSoldOut = (productData, currentSearchkeywords, filterKey, filterValue) => {
+const isSoldOut = (productData, currentSearchkeywords, filterKey: '품절포함', filterValue: 'isSoldOut') => {
   return productData[filterValue] && !checkSpecificCondition(currentSearchkeywords, filterKey);
 };
 
@@ -74,9 +74,6 @@ const checkFullContentHeight = ($searchResult) => {
 
 const renderProducts = (productsData, $searchResult) => {
   let renderFinishFlag = false;
-  if ($searchResult.classList.contains('hide')) {
-    $searchResult.classList.remove('hide');
-  }
 
   const renderProduct = (productData) => {
     const $product = Product(productData);
@@ -119,7 +116,11 @@ const filterSearchKeyword = (productData) => {
     const productName = `${goodsName} ${brandName}`;
 
     for (const keyword of searchKeyword) {
-      if (productName.search(keyword) === -1) {
+      try {
+        if (productName.search(keyword) === -1) {
+          return false;
+        }
+      } catch (error) {
         return false;
       }
     }

@@ -45,15 +45,15 @@ const setActiveButton = () => {
 };
 
 const handleClickFilterButton = ({ target }) => {
-  const filterButton = target.closest(filterButtonClassName);
-  if (!filterButton) {
+  const $filterButton = target.closest(filterButtonClassName);
+  if (!$filterButton) {
     return;
   }
-  const $wordElement = qs('.word', filterButton);
+  const $wordElement = qs('.word', $filterButton);
   const { innerHTML } = $wordElement;
 
   if (isSearchButton(innerHTML)) {
-    const isOpen = toggleClassName(filterButton, 'active-search-bar');
+    const isOpen = toggleClassName($filterButton, 'active-search-bar');
     dispatch({ type: 'SEARCH_BAR_TOGGLE', isOpen, notify: [SEARCH_BAR_OPEN_STATE_NAME] });
     return;
   }
@@ -68,15 +68,15 @@ const handleClickFilterButton = ({ target }) => {
 };
 
 const FilterArea = () => {
-  const searchButton = render({
+  const $searchButton = render({
     tag: 'div',
     attributes: { class: 'small-search-btn' },
     childComponents: SMALL_SEARCH_BUTTON,
   });
 
   const createButton = (keyword: string) => {
-    const firstChild = `<div class="word">${keyword}</div>`;
-    return keyword === '검색' ? [firstChild, searchButton] : firstChild;
+    const $firstChild = `<div class="word">${keyword}</div>`;
+    return keyword === '검색' ? [$firstChild, $searchButton] : $firstChild;
   };
 
   setObserver(SEARCH_STATE_NAME, setActiveButton);

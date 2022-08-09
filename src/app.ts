@@ -40,7 +40,7 @@ const renderRemainProduct = () => {
         removeLoading();
       },
       renderLoading,
-      1000,
+      0,
     );
   }
 };
