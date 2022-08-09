@@ -15,7 +15,7 @@ type RenderElementType = {
   tag: string;
   attributes?: attributeType;
   eventName?: string;
-  handler?: (any) => void;
+  handler?: Function;
   childComponents?: componentType;
   selector?: string;
 };
