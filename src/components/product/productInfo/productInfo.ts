@@ -30,30 +30,34 @@ const addPriceAreaInfoElement = map((element: HTMLElement) => {
 const fillContent = (element: HTMLElement, dict: Map<string, string>) => {
   const { className } = element;
 
-  for (const [targetClassName, content] of dict.entries()) {
-    const $childElement = qs(`.${targetClassName}`, element);
+  go(
+    dict,
+    map(([targetClassName, content]) => {
+      const $childElement = qs(`.${targetClassName}`, element);
 
-    if ($childElement) {
-      $childElement.innerHTML = content;
-      continue;
-    }
+      if ($childElement) {
+        $childElement.innerHTML = content;
+        return;
+      }
 
-    if (className === targetClassName) {
-      element.innerHTML = content;
-      return element;
-    }
-  }
+      if (className === targetClassName) {
+        element.innerHTML = content;
+        return element;
+      }
+    }),
+  );
 
   return element;
 };
 
 const ProductInfo = ({ brandName, goodsName, normalPrice, price, saleRate, isSale }: ProductInfoType) => {
-  const productInfoDict = new Map();
-  productInfoDict.set('product-info__brand', brandName);
-  productInfoDict.set('product-info__title', goodsName);
-  productInfoDict.set('product-info__price', getWonTemplate(normalPrice));
-  productInfoDict.set('product-info__sale-rate', isSale ? `${saleRate}%` : '');
-  productInfoDict.set('product-info__normal-price', isSale ? getWonTemplate(price) : '');
+  const productInfoDict = new Map([
+    ['product-info__brand', brandName],
+    ['product-info__title', goodsName],
+    ['product-info__price', getWonTemplate(normalPrice)],
+    ['product-info__sale-rate', isSale ? `${saleRate}%` : ''],
+    ['product-info__normal-price', isSale ? getWonTemplate(price) : ''],
+  ]);
 
   const childComponents = go(
     productInfoClassNameList,
