@@ -20,14 +20,14 @@ const isPriceArea = ({ className }: HTMLElement) => {
   return className === priceAreaClassName;
 };
 
-const addPriceAreaInfoElement = map((element) => {
+const addPriceAreaInfoElement = map((element: HTMLElement) => {
   if (isPriceArea(element)) {
     return go(priceAreaClassNameList, createElementFromList, (priceComponent) => appendChild(element, priceComponent));
   }
   return element;
 });
 
-const fillContent = (element, dict) => {
+const fillContent = (element: HTMLElement, dict: Map<string, string>) => {
   const { className } = element;
 
   for (const [targetClassName, content] of dict.entries()) {

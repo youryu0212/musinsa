@@ -102,11 +102,11 @@ export const render = ({ tag, attributes, eventName, handler, childComponents, s
   );
 };
 
-export const toggleClassName = ($element: HTMLElement, className: string): boolean => {
+export const toggleClassName = ($element: HTMLDivElement | Element, className: string): boolean => {
   return $element.classList.toggle(className);
 };
 
-export const innerHTML = ($target: Element | HTMLElement, components) => {
+export const innerHTML = ($target: Element, components) => {
   $target.innerHTML = '';
   appendChild($target, components);
   return $target;

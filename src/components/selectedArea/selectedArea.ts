@@ -5,7 +5,11 @@ import { innerHTML, qs, render } from 'src/utils/dom';
 import { go, map } from 'src/utils/utils';
 import SelectedFilter from './selectedFilter/selectedFilter';
 
-const toggleSelectedAreaDisplay = (words) => {
+type WordsType = {
+  word: string;
+}[];
+
+const toggleSelectedAreaDisplay = (words: WordsType) => {
   const $selectedArea = qs('.selected-area');
   if (!words.length) {
     $selectedArea.classList.add('hide');
@@ -15,7 +19,7 @@ const toggleSelectedAreaDisplay = (words) => {
   return words;
 };
 
-const reRender = (words) => {
+const reRender = (words: WordsType) => {
   const $selectedFilterArea = qs('.selected-filter-area');
 
   return go(
@@ -31,7 +35,7 @@ const resetFilterButton = () => {
   dispatch({ type: 'SEARCH_RESET', notify: [SEARCH_STATE_NAME] });
 };
 
-const removeSelectedFilter = ({ target }) => {
+const removeSelectedFilter = ({ target }: { target: HTMLDivElement }) => {
   const { dispatch } = searchFilterContext;
   const $targetFilter = target.closest('.selected-filter');
   const { innerHTML } = qs('.word', $targetFilter);

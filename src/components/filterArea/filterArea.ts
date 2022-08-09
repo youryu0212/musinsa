@@ -10,11 +10,11 @@ const filterButtonClassName = '.filter-btn';
 const tagList: string[] = ['검색', '세일상품', '단독상품', '품절포함'];
 const { store, setObserver, dispatch } = searchFilterContext;
 
-const isSearchButton = (word) => {
+const isSearchButton = (word: string) => {
   return word === '검색';
 };
 
-const filterActiveButton = map((element) => {
+const filterActiveButton = map((element: HTMLDivElement) => {
   const { state } = store;
   const { words } = state;
   const { innerHTML } = element;
@@ -44,7 +44,7 @@ const setActiveButton = () => {
   );
 };
 
-const handleClickFilterButton = ({ target }) => {
+const handleClickFilterButton = ({ target }: { target: HTMLDivElement }) => {
   const $filterButton = target.closest(filterButtonClassName);
   if (!$filterButton) {
     return;

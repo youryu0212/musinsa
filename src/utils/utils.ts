@@ -1,9 +1,9 @@
 export const curry =
-  (fnc) =>
+  (fnc: Function) =>
   (arg, ...args) =>
     args.length ? fnc(arg, ...args) : (...args) => fnc(arg, ...args);
 
-export const map = curry((callback, iter) => {
+export const map = curry((callback: Function, iter) => {
   const res = [];
 
   for (const element of iter) {
@@ -12,7 +12,7 @@ export const map = curry((callback, iter) => {
   return res;
 });
 
-export const filter = curry((callback, iter) => {
+export const filter = curry((callback: Function, iter) => {
   let res = [];
   for (const el of iter) {
     if (callback(el)) res.push(el);
@@ -20,7 +20,7 @@ export const filter = curry((callback, iter) => {
   return res;
 });
 
-export const reduce = curry((callback, acc, iter) => {
+export const reduce = curry((callback: Function, acc, iter) => {
   if (!iter) {
     iter = acc[Symbol.iterator]();
     acc = iter.next().value;
@@ -63,7 +63,7 @@ export const fetchData = async (url: string, { method, bodyData }: any = {}) => 
 
 export const getWonTemplate = (num: number) => `${num.toLocaleString()}원`;
 
-export const throttling = (timer, key: string, callback, setupFnc = null, delay = 2000) => {
+export const throttling = (timer, key: string, callback: Function, setupFnc = null, delay: number = 2000) => {
   if (!timer[key]) {
     if (setupFnc) {
       setupFnc();

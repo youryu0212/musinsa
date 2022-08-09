@@ -12,6 +12,7 @@ const { dispatch } = searchFilterContext;
 
 const handleSearchSubmit = (evt) => {
   evt.preventDefault();
+
   const searchButtonClassName = 'active-search-bar';
   const $searchButton = qs(`.${searchButtonClassName}`);
 

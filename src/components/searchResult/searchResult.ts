@@ -12,6 +12,11 @@ import searchFilterContext from 'src/context/searchFilterProvider';
 import { appendChild, qs, qsAll, render } from 'src/utils/dom';
 import { fetchData, filter, go, map, pipe, reduce } from 'src/utils/utils';
 
+type StateType = {
+  words: [];
+  isOpen: boolean;
+};
+
 const { store, setObserver, dispatch } = searchFilterContext;
 const { store: productStore, setObserver: setObserverProduct, dispatch: dispatchProduct } = productContext;
 
@@ -21,29 +26,29 @@ const mergeAllProductData = pipe(
   reduce((a, b) => [...a, ...b]),
 );
 
-const checkSpecificCondition = (searchKeywords, condition: string) => {
+const checkSpecificCondition = (searchKeywords: string[], condition: string) => {
   return !!filter((searchKeyword) => searchKeyword === condition, searchKeywords).length;
 };
 
-const getCurrentSearchFilter = (state) => {
+const getCurrentSearchFilter = (state: StateType) => {
   return go(
     state.words,
     map(({ word }) => word),
   );
 };
 
-const getSearchkeyword = (currentSearchkeywords) => {
+const getSearchkeyword = (currentSearchkeywords: string[]) => {
   return go(
     currentSearchkeywords,
     filter((word) => !FILTER_KEYWORDS.has(word)),
   );
 };
 
-const isSoldOut = (productData, currentSearchkeywords, filterKey: '품절포함', filterValue: 'isSoldOut') => {
+const isSoldOut = (productData, currentSearchkeywords: string[], filterKey: '품절포함', filterValue: string) => {
   return productData[filterValue] && !checkSpecificCondition(currentSearchkeywords, filterKey);
 };
 
-const filterProduct = (productData, currentSearchkeywords, filterKey, filterValue) => {
+const filterProduct = (productData, currentSearchkeywords: string[], filterKey: string, filterValue: string) => {
   if (filterKey === '품절포함' && isSoldOut(productData, currentSearchkeywords, filterKey, filterValue)) {
     return false;
   }
@@ -58,7 +63,7 @@ const filterProduct = (productData, currentSearchkeywords, filterKey, filterValu
   return false;
 };
 
-const checkFullContentHeight = ($searchResult) => {
+const checkFullContentHeight = ($searchResult: Element) => {
   const { x: appX, width: appWidth, y: appY, height: appHeight } = qs('.app').getBoundingClientRect();
   const APP_HEIGHT = appY + appHeight - HEIGHT_OFFSET;
   const APP_WIDTH = appX + appWidth - WIDTH_OFFSET;
@@ -72,7 +77,7 @@ const checkFullContentHeight = ($searchResult) => {
   return false;
 };
 
-const renderProducts = (productsData, $searchResult) => {
+const renderProducts = (productsData, $searchResult: Element) => {
   let renderFinishFlag = false;
 
   const renderProduct = (productData) => {
